@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, {useState} from "react";
+import ShippingRateForm from "./components/ShippingRateForm";
+import ShippingRateTable from "./components/ShippingRateTable";
+import {ShippingRate} from "./types";
+import {toast} from "react-toastify";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+    const [shippingRates, setShippingRates] = useState<ShippingRate[]>([]);
+    const [currentRate, setCurrentRate] = useState<ShippingRate | null>(null);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    const handleAddRate = (rate: ShippingRate) => {
+        setShippingRates((prevRates) => [...prevRates, {...rate, id: Date.now()}]);
+        setCurrentRate(null);
+        toast.success("Shipping Rate added successfully")
+    };
 
-export default App
+    const handleEditRate = (rate: ShippingRate) => {
+        setShippingRates([...shippingRates.filter((r) => r.id !== rate.id), rate])
+        setCurrentRate(rate);
+        toast.success("Shipping rate updated successfully")
+    };
+
+    const handleDeleteRate = (id: string) => {
+        setShippingRates((prevRates) => prevRates.filter((rate) => rate.id !== id));
+    };
+
+    const handleReorder = (newRates: ShippingRate[]) => {
+        setShippingRates(newRates);
+    };
+
+    return (
+        <div className="flex flex-col gap-y-4 p-4">
+            <div className="text-black font-bold text-center text-lg">Shipping Rate Management</div>
+            <ShippingRateForm onSubmit={handleAddRate} initialValues={currentRate}/>
+            <ShippingRateTable
+                shippingRates={shippingRates}
+                onEdit={handleEditRate}
+                onDelete={handleDeleteRate}
+                onReorder={handleReorder}
+            />
+        </div>
+    );
+};
+
+export default App;
