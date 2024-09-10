@@ -10,12 +10,7 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({
-                                           label,
-                                           type = 'button',
-                                           variant = 'primary',
-                                           disabled = false,
-                                           className = '',
-                                           onClick,
+                                           label, type, variant, disabled, className, onClick,
                                        }) => {
     const baseStyles = 'py-2 px-5 rounded-md font-medium text-sm focus:outline-none';
     const variantStyles = {

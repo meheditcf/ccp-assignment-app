@@ -6,7 +6,7 @@ interface PaginationProps {
     onPageChange: (pageNumber: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({currentPage, totalPages, onPageChange,}) => {
+const Pagination: React.FC<PaginationProps> = ({currentPage, totalPages, onPageChange}) => {
     const pages = Array.from({length: totalPages}, (_, index) => index + 1);
 
     return (
