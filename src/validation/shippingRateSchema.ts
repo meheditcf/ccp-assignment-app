@@ -2,19 +2,23 @@ import * as Yup from "yup";
 import {ShippingRateFormValues} from "../types";
 
 export const shippingRateSchema: Yup.SchemaOf<ShippingRateFormValues> = Yup.object({
-    rateType: Yup.string().required("Shipping rate is required"),
-    price: Yup.number().required("Price is required").min(1, "Price must be greater than 0"),
-    timeFrom: Yup.number().required("Is required").min(0, "Must be greater than or equal to 0"),
+    rateType: Yup.number().required("Shipping rate is required"),
+    price: Yup.number().required("Price is required").min(0, "Price can't be negative"),
+    timeFrom: Yup.number()
+        .required("Is required")
+        .min(0, "Can't be negative")
+        .test(
+            'is-less-than-or-equal',
+            "Start date must be less than or equal to End date",
+            (timeFrom, {parent}) => timeFrom <= parent.timeTo
+        ),
     timeTo: Yup.number()
         .required("Is required")
-        .min(0)
+        .min(0, "Can't be negative")
         .test(
             'is-greater-than-or-equal',
-            "The start date must be less than or equal to the end date",
-            function (value) {
-                const {timeFrom} = this.parent;
-                return value >= timeFrom;
-            }
+            "End date must be greater than or equal to Start date",
+            (timeTo, {parent}) => timeTo >= parent.timeFrom
         ),
-    freeShippingAmount: Yup.number().min(0, "Must be greater than or equal to 0"),
+    freeShippingAmount: Yup.number().min(0, "Can't be negative"),
 });

@@ -14,7 +14,7 @@ const Pagination: React.FC<PaginationProps> = ({currentPage, totalPages, onPageC
             <button
                 className={`px-4 py-2 mr-2 ${
                     currentPage === 1
-                        ? "text-gray-400 cursor-not-allowed"
+                        ? "text-black cursor-not-allowed"
                         : "text-blue-500 hover:text-blue-700"
                 }`}
                 onClick={() => onPageChange(currentPage - 1)}
@@ -40,7 +40,7 @@ const Pagination: React.FC<PaginationProps> = ({currentPage, totalPages, onPageC
             <button
                 className={`px-4 py-2 ml-2 ${
                     currentPage === totalPages
-                        ? "text-gray-400 cursor-not-allowed"
+                        ? "text-black cursor-not-allowed"
                         : "text-blue-500 hover:text-blue-700"
                 }`}
                 onClick={() => onPageChange(currentPage + 1)}

@@ -1,10 +1,10 @@
 export const SHIPPING_RATES = {
     STANDARD: {
-        value: 'standard',
+        value: 1,
         label: 'Standard',
     },
     EXPRESS: {
-        value: 'express',
+        value: 2,
         label: 'Express',
     }
 };

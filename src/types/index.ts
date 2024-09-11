@@ -1,6 +1,6 @@
 export interface ShippingRate {
     id: number;
-    rateType: string;
+    rateType: number;
     price: number;
     timeFrom: number;
     timeTo: number;
@@ -9,7 +9,7 @@ export interface ShippingRate {
 
 
 export interface ShippingRateFormValues {
-    rateType: string;
+    rateType: number;
     price: number;
     timeFrom: number;
     timeTo: number;
