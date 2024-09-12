@@ -1,51 +1,33 @@
-# React + TypeScript + Vite
+# Shipping Rate Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This web interface allows users to manage shipping rates effectively. It provides functionalities to add, edit, delete, sort, and reorder rates with an intuitive drag-and-drop feature. The system also supports pagination and has a fully responsive design.
 
-Currently, two official plugins are available:
+## Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Form Handling
+- **Add/Edit Shipping Rates**: Utilize Formik for form management with Yup for validation.
 
-## Expanding the ESLint configuration
+### Table Management
+- **Sorting**: Sort rates directly in the table without relying on external libraries.
+- **Reordering**: Implement drag-and-drop functionality for reordering table rows.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### State Management
+- **React Context API**: Efficiently manages application state, suitable for the lightweight nature of this project.
 
-- Configure the top-level `parserOptions` property like this:
+### Design
+- **Tailwind CSS**: Provides utility-based styling for a responsive and customizable design.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### User Feedback
+- **react-toastify**: Displays toast notifications for user feedback after various operations.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Simulated API
+- **Loading States**: Simulate API interactions using `setTimeout` and a loader to mimic real API behavior.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Tech Stack
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# ccp-assignment-app
+- **Frontend**: React, TypeScript
+- **Styling**: Tailwind CSS
+- **Form Handling**: Formik, Yup (for validation)
+- **State Management**: React Context API
+- **Notifications**: react-toastify
+- **Custom Implementations**: Drag-and-drop and table sorting logic
