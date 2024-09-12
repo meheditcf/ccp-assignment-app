@@ -5,15 +5,27 @@ import {INITIAL_FORM_VALUES, SHIPPING_RATES} from "../../constants";
 import {shippingRateSchema} from "../../validation/shippingRateSchema";
 import Button from "../Button";
 import CurrencyInput from "../CurrencyInput";
+import {useShippingRates} from "../../hooks/useShippingRates";
 
-
-interface FormProps {
-    onSubmit: (data: ShippingRate) => void;
-    initialValues?: ShippingRate;
+interface ShippingRateFormProps {
+    selectedRate?: ShippingRate;
 }
 
-const ShippingRateForm: React.FC<FormProps> = ({onSubmit, initialValues}) => {
-    const initialFormValues: ShippingRate = initialValues || INITIAL_FORM_VALUES;
+const ShippingRateForm: React.FC<ShippingRateFormProps> = ({selectedRate}) => {
+    const {
+        handleAdd,
+        loading,
+        handleEdit
+    } = useShippingRates();
+
+    const initialFormValues: ShippingRate = selectedRate || INITIAL_FORM_VALUES;
+    const handleSubmit = (formValues) => {
+        if (selectedRate) {
+            handleEdit(formValues);
+        } else {
+            handleAdd(formValues);
+        }
+    }
 
     return (
         <Formik
@@ -21,25 +33,26 @@ const ShippingRateForm: React.FC<FormProps> = ({onSubmit, initialValues}) => {
             validationSchema={shippingRateSchema}
             validateOnMount
             onSubmit={(values, {resetForm}) => {
-                onSubmit(values);
+                handleSubmit(values);
                 resetForm();
             }}
         >
             {({isSubmitting, isValid, dirty}) => (
                 <Form className="mx-auto bg-white p-6 shadow-lg rounded-lg space-y-4">
-                    <div className="flex flex-col gap-y-2">
-                        <label className="block text-sm font-medium text-gray-700">Shipping Rate</label>
+                    <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-700">
+                            Shipping Rate <span className="text-red-500 font-bold text-md">*</span>
+                        </label>
                         <Field
                             as="select"
                             name="rateType"
                             className="block w-full p-3 border border-gray-300 rounded-md focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200 transition duration-150 ease-in-out"
                         >
-                            <option value={SHIPPING_RATES.STANDARD.value}>
-                                {SHIPPING_RATES.STANDARD.label}
-                            </option>
-                            <option value={SHIPPING_RATES.EXPRESS.value}>
-                                {SHIPPING_RATES.EXPRESS.label}
-                            </option>
+                            {Object.values(SHIPPING_RATES).map((rate) => (
+                                <option key={rate.value} value={rate.value}>
+                                    {rate.label}
+                                </option>
+                            ))}
                         </Field>
                         <ErrorMessage
                             name="rateType"
@@ -47,15 +60,14 @@ const ShippingRateForm: React.FC<FormProps> = ({onSubmit, initialValues}) => {
                             className="text-red-500 text-xs"
                         />
                     </div>
-
                     <CurrencyInput
                         label="Price"
                         name="price"
+                        required
                     />
-
-                    <div className="flex flex-col gap-y-2">
+                    <div className="space-y-2">
                         <label className="block text-sm font-medium text-gray-700">
-                            Shipping Timeframe (Days)
+                            Shipping Timeframe (Days) <span className="text-red-500 font-bold text-md">*</span>
                         </label>
                         <div className="flex space-x-4">
                             <Field
@@ -90,9 +102,9 @@ const ShippingRateForm: React.FC<FormProps> = ({onSubmit, initialValues}) => {
                     />
                     <Button
                         type="submit"
-                        label={initialValues ? "Update" : "Save"}
+                        label={selectedRate ? "Update" : "Save"}
                         variant="primary"
-                        disabled={isSubmitting || !isValid || initialValues && !dirty}
+                        disabled={isSubmitting || !isValid || selectedRate && !dirty || loading}
                         className="w-full"
                     />
                 </Form>

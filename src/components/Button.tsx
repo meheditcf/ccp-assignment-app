@@ -2,7 +2,7 @@ import React from 'react';
 
 interface ButtonProps {
     label: string;
-    type?: 'button' | 'submit' | 'reset';
+    type?: 'button' | 'submit';
     variant?: 'primary' | 'secondary' | 'danger';
     size?: 'sm' | 'md' | 'lg';
     disabled?: boolean;
@@ -13,13 +13,14 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({
                                            label,
-                                           type,
-                                           variant,
-                                           size,
-                                           disabled,
-                                           className,
-                                           onClick,
-                                           helpText,
+                                           type = 'button',
+                                           variant = 'primary',
+                                           size = 'md',
+                                           disabled = false,
+                                           className = '',
+                                           onClick = () => {
+                                           },
+                                           helpText = '',
                                        }) => {
     const baseStyles = 'rounded-md font-medium focus:outline-none';
 
@@ -30,8 +31,8 @@ const Button: React.FC<ButtonProps> = ({
     };
 
     const variantStyles = {
-        primary: 'bg-primary text-white hover:bg-blue-600',
-        secondary: 'bg-white text-gray-900 border border-gray-300 hover:bg-gray-100',
+        primary: 'bg-primary text-white hover:bg-blue-800',
+        secondary: 'bg-white text-gray-900 border border-gray-300 hover:bg-gray-200',
         danger: 'bg-red-500 text-white hover:bg-red-800',
     };
 
@@ -50,17 +51,6 @@ const Button: React.FC<ButtonProps> = ({
             {label}
         </button>
     );
-};
-
-Button.defaultProps = {
-    type: 'button',
-    variant: 'primary',
-    size: 'md',
-    disabled: false,
-    className: '',
-    onClick: () => {
-    },
-    helpText: '',
 };
 
 export default Button;

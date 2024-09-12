@@ -28,7 +28,7 @@ const ShippingRateRow: React.FC<ShippingRateRowProps> = ({rate, index, onEdit, o
     return (
         <tr
             draggable
-            className="hover:bg-gray-200"
+            className="hover:bg-gray-100"
             onDragStart={() => onDragStart(index)}
             onDrop={() => onDrop(index)}
             onDragOver={(e) => e.preventDefault()}

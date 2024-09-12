@@ -18,3 +18,23 @@ export const INITIAL_FORM_VALUES = {
     timeTo: 1,
     freeShippingAmount: 0,
 };
+
+export const SORTING_CONFIG = {
+    KEYS: {
+        RATE_TYPE: 'rateType' as const,
+        PRICE: 'price' as const,
+        TIMEFRAME: 'timeframe' as const,
+        FREE_SHIPPING_AMOUNT: 'freeShippingAmount' as const,
+    },
+    ORDERS: {
+        ASCENDING: 'asc' as const,
+        DESCENDING: 'desc' as const,
+    }
+};
+
+export const PAGINATION_CONFIG = {
+    PAGE_SIZE: 5 as const,
+    PAGE_NUMBER: 1 as const,
+};
+
+

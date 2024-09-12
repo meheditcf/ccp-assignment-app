@@ -2,85 +2,61 @@ import React, {useState, useMemo} from "react";
 import ShippingRateForm from "./ShippingRateForm";
 import ShippingRateTableHeader from "./ShippingRateTableHeader";
 import ShippingRateRow from "./ShippingRateTableRow";
-import {ShippingRate} from "../../types";
+import {ShippingRate, SortingFilter} from "../../types";
 import Modal from "../Modal";
 import Pagination from "../Pagination";
 import Button from "../Button";
+import {useShippingRates} from "../../hooks/useShippingRates";
+import {PAGINATION_CONFIG, SORTING_CONFIG} from "../../constants";
+import {handleDragAndDrop, paginateShippingRates, sortShippingRates} from "../../utils";
 
-interface TableProps {
-    shippingRates: ShippingRate[];
-    onEdit: (data: ShippingRate) => void;
-    onDelete: (id: string) => void;
-    onReorder: (newRates: ShippingRate[]) => void;
-}
+const ShippingRateTable: React.FC = () => {
+    const {
+        shippingRates,
+        handleReorder,
+        handleDelete
+    } = useShippingRates();
 
-interface SortingFilter {
-    column: keyof ShippingRate;
-    order: 'asc' | 'desc';
-}
-
-const ShippingRateTable: React.FC<TableProps> = ({
-                                                     shippingRates,
-                                                     onEdit,
-                                                     onDelete,
-                                                     onReorder
-                                                 }) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [rateToDelete, setRateToDelete] = useState<string | null>(null);
+    const [rateToDelete, setRateToDelete] = useState<number | null>(null);
     const [selectedRate, setSelectedRate] = useState<ShippingRate | null>(null);
     const [draggedItemIndex, setDraggedItemIndex] = useState<number | null>(null);
 
-    // Sorting state
     const [sortingFilter, setSortingFilter] = useState<SortingFilter>({
-        column: 'rateType',
-        order: 'asc'
+        key: SORTING_CONFIG.KEYS.RATE_TYPE,
+        order: SORTING_CONFIG.ORDERS.ASCENDING
     });
+    const [currentPage, setCurrentPage] = useState(PAGINATION_CONFIG.PAGE_NUMBER);
 
-    // Sorting function
-    const sortedRates = useMemo(() => {
-        return [...shippingRates].sort((a, b) => {
-            const {column, order} = sortingFilter;
-            const valueA = a[column];
-            const valueB = b[column];
+    // Memoized sorted and paginated rates
+    const sortedRates = useMemo(() => sortShippingRates(shippingRates, sortingFilter), [shippingRates, sortingFilter]);
+    const currentRates = useMemo(() => paginateShippingRates(sortedRates, currentPage), [sortedRates, currentPage]);
 
-            const compare = (valueA > valueB ? 1 : -1);
-            return order === 'asc' ? compare : -compare;
-        });
-    }, [shippingRates, sortingFilter]);
+    const handleSort = (key: keyof ShippingRate) => {
+        const {
+            ASCENDING,
+            DESCENDING
+        } = SORTING_CONFIG.ORDERS
+        setSortingFilter(prev => ({
+            key,
+            order: prev.key === key ? (prev.order === ASCENDING ? DESCENDING : ASCENDING) : ASCENDING
+        }));
+    };
 
-    // Pagination calculation
-    const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 5;
-    const indexOfLastRate = currentPage * rowsPerPage;
-    const indexOfFirstRate = indexOfLastRate - rowsPerPage;
-    const currentRates = sortedRates.slice(indexOfFirstRate, indexOfLastRate);
-
-
+    // Drag and drop handlers
     const handleDragStart = (index: number) => {
         setDraggedItemIndex(index);
     };
+    const handleDrop = (index: number) => handleDragAndDrop(draggedItemIndex, index, shippingRates, handleReorder);
 
-    const handleDrop = (index: number) => {
-        if (draggedItemIndex === null || draggedItemIndex === index) return;
-
-        const updatedRates = [...shippingRates];
-        const draggedItem = updatedRates[draggedItemIndex];
-
-        // Remove dragged item and insert it at the new index
-        updatedRates.splice(draggedItemIndex, 1);
-        updatedRates.splice(index, 0, draggedItem);
-
-        onReorder(updatedRates); // Update parent state with the reordered list
-        setDraggedItemIndex(null);
-    };
-
+    // Edit and delete handlers
     const handleEditClick = (rate: ShippingRate) => {
         setSelectedRate(rate);
         setIsEditModalOpen(true);
     };
 
-    const handleDeleteClick = (rateId: string) => {
+    const handleDeleteClick = (rateId: number) => {
         setRateToDelete(rateId);
         setIsDeleteModalOpen(true);
     };
@@ -97,32 +73,19 @@ const ShippingRateTable: React.FC<TableProps> = ({
 
     const handleConfirmDelete = () => {
         if (rateToDelete) {
-            onDelete(rateToDelete);
+            handleDelete(rateToDelete);
             setIsDeleteModalOpen(false);
             setRateToDelete(null);
         }
-    };
-
-    const handleFormSubmit = (updatedRate: ShippingRate) => {
-        onEdit(updatedRate);
-        setIsEditModalOpen(false);
     };
 
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     };
 
-    const handleSort = (column: keyof ShippingRate) => {
-        setSortingFilter(prev => ({
-            column,
-            order: prev.column === column ? (prev.order === 'asc' ? 'desc' : 'asc') : 'asc'
-        }));
-    };
-
-    if (!shippingRates || !shippingRates.length) {
-        return <div className="text-center text-black">No shipping rate available!</div>;
+    if (!shippingRates || shippingRates.length === 0) {
+        return null;
     }
-
 
     return (
         <div className="flex flex-col items-center mx-auto w-full">
@@ -152,8 +115,7 @@ const ShippingRateTable: React.FC<TableProps> = ({
             <Modal isOpen={isEditModalOpen} onClose={handleEditModalClose} header="Edit Shipping Rate">
                 {selectedRate && (
                     <ShippingRateForm
-                        onSubmit={handleFormSubmit}
-                        initialValues={selectedRate}
+                        selectedRate={selectedRate}
                     />
                 )}
             </Modal>
@@ -178,7 +140,7 @@ const ShippingRateTable: React.FC<TableProps> = ({
             {/* Pagination Controls */}
             <Pagination
                 currentPage={currentPage}
-                totalPages={Math.ceil(sortedRates.length / rowsPerPage)}
+                totalPages={Math.ceil(sortedRates.length / PAGINATION_CONFIG.PAGE_SIZE)}
                 onPageChange={handlePageChange}
             />
         </div>
