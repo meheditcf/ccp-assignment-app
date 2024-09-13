@@ -17,7 +17,7 @@ const CurrencyInput: React.FC<CurrencyInputProps> = ({
                                                      }) => {
     return (
         <div className="flex flex-col gap-y-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label htmlFor={name} className="block text-sm font-medium text-gray-700">
                 {label} {required && <span className="text-red-500 font-bold text-md">*</span>}
             </label>
             <div className="relative">
@@ -26,6 +26,7 @@ const CurrencyInput: React.FC<CurrencyInputProps> = ({
                 </div>
                 <Field
                     type="number"
+                    id={name}
                     name={name}
                     placeholder={placeholder}
                     className="block w-full pl-9 p-3 border border-gray-300 rounded-md focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200 transition duration-150 ease-in-out"

@@ -14,10 +14,10 @@ const ShippingRatesManagement: React.FC = () => {
     return (
         <div className="p-6 rounded-lg max-w-4xl mx-auto flex flex-col gap-y-8">
             <div className="text-center flex flex-col gap-y-1">
-                <div className="text-2xl font-bold text-indigo-900">
+                <div className="font-bold text-indigo-900 xs:text-sm sm:text-sm md:text-base lg:text-xl xl:text-2xl">
                     Shipping Rate Management
                 </div>
-                <p className="text-black max-w-md mx-auto">
+                <p className="text-black max-w-md mx-auto xs:text-xs sm:text-xs md:text-sm lg:text-base xl:text-base">
                     Manage and configure shipping rates effortlessly. Add, edit, and organize rates with ease for
                     streamlined operations.
                 </p>

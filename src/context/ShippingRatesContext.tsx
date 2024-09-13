@@ -27,9 +27,16 @@ export const ShippingRatesProvider: React.FC = ({children}) => {
     const updateRates = (newRates: ShippingRate[], successMsg: string = '') => {
         setLoading(true);
         setTimeout(() => {
-            setShippingRates(newRates);
-            setLoading(false);
-            if (successMsg) toast.success(successMsg)
+            try {
+                setShippingRates(newRates);
+                setLoading(false);
+                if (successMsg) {
+                    toast.success(successMsg);
+                }
+            } catch (error) {
+                setLoading(false);
+                toast.error('Failed to do the operation. Please try again later.');
+            }
         }, 500);
     };
 

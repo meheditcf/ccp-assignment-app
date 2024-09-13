@@ -33,15 +33,15 @@ const ShippingRateRow: React.FC<ShippingRateRowProps> = ({rate, index, onEdit, o
             onDrop={() => onDrop(index)}
             onDragOver={(e) => e.preventDefault()}
         >
-            <td className="p-4 text-left">{typeLabel}</td>
-            <td className="p-4 text-center">${price}</td>
-            <td className="p-4 text-center">
+            <td className="p-4 text-left text-sm md:text-base">{typeLabel}</td>
+            <td className="p-4 text-center text-sm md:text-base">${price}</td>
+            <td className="p-4 text-center text-sm md:text-base">
                 {timeFrom} - {timeTo} days
             </td>
-            <td className="p-4 text-center">
+            <td className="p-4 text-center text-sm md:text-base">
                 {freeShippingAmount ? `$${freeShippingAmount}` : "N/A"}
             </td>
-            <td className="p-4">
+            <td className="p-4 text-sm md:text-base">
                 <div className="flex gap-x-4">
                     <Button
                         type="button"

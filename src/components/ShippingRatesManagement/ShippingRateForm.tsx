@@ -40,12 +40,13 @@ const ShippingRateForm: React.FC<ShippingRateFormProps> = ({selectedRate}) => {
             {({isSubmitting, isValid, dirty}) => (
                 <Form className="mx-auto bg-white p-6 shadow-lg rounded-lg space-y-4">
                     <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="rateType" className="block text-sm font-medium text-gray-700">
                             Shipping Rate <span className="text-red-500 font-bold text-md">*</span>
                         </label>
                         <Field
                             as="select"
                             name="rateType"
+                            id="rateType"
                             className="block w-full p-3 border border-gray-300 rounded-md focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200 transition duration-150 ease-in-out"
                         >
                             {Object.values(SHIPPING_RATES).map((rate) => (
