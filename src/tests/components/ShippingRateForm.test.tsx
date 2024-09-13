@@ -1,7 +1,10 @@
+// @ts-ignore
+import React from 'react';
 import {render, screen, fireEvent, waitFor} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {ShippingRatesProvider} from '../../context/ShippingRatesContext';
 import ShippingRateForm from "../../components/ShippingRatesManagement/ShippingRateForm";
+import {describe, it, expect} from 'vitest';
 
 const renderWithProvider = (ui: React.ReactElement) => {
     return render(<ShippingRatesProvider>{ui}</ShippingRatesProvider>);

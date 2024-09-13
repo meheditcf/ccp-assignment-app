@@ -1,4 +1,4 @@
-import React, {createContext, useState} from "react";
+import React, {createContext, ReactNode, useState} from "react";
 import {toast} from "react-toastify";
 import {ShippingRate} from "../types";
 
@@ -14,11 +14,15 @@ interface ShippingRatesContextProps {
     handleReorder: (newRates: ShippingRate[]) => void;
 }
 
+interface ShippingRatesProviderProps {
+    children: ReactNode;
+}
+
 // Creating context
 export const ShippingRatesContext = createContext<ShippingRatesContextProps | undefined>(undefined);
 
 // Provider component
-export const ShippingRatesProvider: React.FC = ({children}) => {
+export const ShippingRatesProvider: React.FC<ShippingRatesProviderProps> = ({children}) => {
     const [shippingRates, setShippingRates] = useState<ShippingRate[]>([]);
     const [currentRate, setCurrentRate] = useState<ShippingRate | null>(null);
     const [loading, setLoading] = useState(false);

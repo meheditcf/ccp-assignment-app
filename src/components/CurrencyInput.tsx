@@ -4,7 +4,7 @@ import {Field, ErrorMessage} from 'formik';
 interface CurrencyInputProps {
     label: string;
     name: string;
-    symbol: string;
+    symbol?: string;
     placeholder?: string;
     required?: boolean;
 }

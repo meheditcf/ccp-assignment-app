@@ -19,7 +19,7 @@ const ShippingRateForm: React.FC<ShippingRateFormProps> = ({selectedRate}) => {
     } = useShippingRates();
 
     const initialFormValues: ShippingRate = selectedRate || INITIAL_FORM_VALUES;
-    const handleSubmit = (formValues) => {
+    const handleSubmit = (formValues: ShippingRate) => {
         if (selectedRate) {
             handleEdit(formValues);
         } else {

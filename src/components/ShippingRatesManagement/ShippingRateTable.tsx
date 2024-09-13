@@ -27,13 +27,13 @@ const ShippingRateTable: React.FC = () => {
         key: SORTING_CONFIG.KEYS.RATE_TYPE,
         order: SORTING_CONFIG.ORDERS.ASCENDING
     });
-    const [currentPage, setCurrentPage] = useState(PAGINATION_CONFIG.PAGE_NUMBER);
+    const [currentPage, setCurrentPage] = useState<number>(PAGINATION_CONFIG.PAGE_NUMBER);
 
     // Memoized sorted and paginated rates
     const sortedRates = useMemo(() => sortShippingRates(shippingRates, sortingFilter), [shippingRates, sortingFilter]);
     const currentRates = useMemo(() => paginateShippingRates(sortedRates, currentPage), [sortedRates, currentPage]);
 
-    const handleSort = (key: keyof ShippingRate) => {
+    const handleSort = (key: string) => {
         const {
             ASCENDING,
             DESCENDING

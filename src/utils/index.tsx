@@ -12,15 +12,17 @@ export const sortShippingRates = (
     return [...shippingRates].sort((a, b) => {
         const {key, order} = sortingFilter;
 
-        let valueA: number | undefined = 0;
-        let valueB: number | undefined = 0;
+        const propertyKey = key as keyof ShippingRate;
+
+        let valueA: number = 0;
+        let valueB: number = 0;
 
         if (key === SORTING_CONFIG.KEYS.TIMEFRAME) {
             valueA = (a.timeFrom || 0) + (a.timeTo || 0);
             valueB = (b.timeFrom || 0) + (b.timeTo || 0);
         } else {
-            valueA = a[key];
-            valueB = b[key];
+            valueA = a[propertyKey] || 0;
+            valueB = b[propertyKey] || 0;
         }
 
         const compare = (valueA > valueB ? 1 : -1);

@@ -8,7 +8,7 @@ interface ShippingRateRowProps {
     rate: ShippingRate;
     index: number;
     onEdit: (rate: ShippingRate) => void;
-    onDelete: (id: string) => void;
+    onDelete: (id: number) => void;
     onDragStart: (index: number) => void;
     onDrop: (index: number) => void;
 }
