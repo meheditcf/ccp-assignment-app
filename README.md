@@ -2,6 +2,8 @@
 
 This web interface allows users to manage shipping rates effectively. It provides functionalities to add, edit, delete, sort, and reorder rates with an intuitive drag-and-drop feature. The system also supports pagination and has a fully responsive design.
 
+You can view the live project [here](https://shipping-rates.netlify.app/).
+
 ## Key Features
 
 ### Form Handling
