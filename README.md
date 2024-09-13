@@ -1,51 +1,38 @@
-# React + TypeScript + Vite
+# Shipping Rate Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This web interface allows users to manage shipping rates effectively. It provides functionalities to add, edit, delete, sort, and reorder rates with an intuitive drag-and-drop feature. The system also supports pagination and has a fully responsive design.
 
-Currently, two official plugins are available:
+## Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Form Handling
+- **Add/Edit Shipping Rates**: Utilized Formik for form management with Yup for validation.
 
-## Expanding the ESLint configuration
+### Table Management
+- **Sorting**: Implemented Sorting rates directly in the table without using external libraries.
+- **Drag-n-Drop**: Implemented drag-and-drop functionality for reordering table rows without using external libraries
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### State Management
+- **React Context**: It was used to efficiently manage the application state, which is suitable for a lightweight project like this.
+- **useState hook**: Used useState hook for local state management.
 
-- Configure the top-level `parserOptions` property like this:
+### Design
+- **Tailwind CSS**: I used Tailwind CSS because it is a utility-based framework that gives the flexibility to modify everything and because I am very familiar with it. It Provides utility-based styling for a responsive and customizable design.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Success/Failed Notification
+- **react-toastify**: Used this library to display toast notifications after various operations.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Simulated API
+- **Loading States**: Tried to make changes look like API calls using `setTimeout` and a loader.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Testing
+- **Vitest**:  I used it as it is a suitable unit testing framework for Vite projects.
+- **@testing-library/react**: Provides utilities to test React components.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# ccp-assignment-app
+## Tech Stack
+
+- **Frontend**: React, TypeScript
+- **Styling**: Tailwind CSS
+- **Form Handling**: Formik, Yup (for validation)
+- **State Management**: React Context
+- **Notifications**: react-toastify
+- **Custom Implementations**: Drag-and-drop and table sorting logic
