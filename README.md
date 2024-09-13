@@ -5,29 +5,34 @@ This web interface allows users to manage shipping rates effectively. It provide
 ## Key Features
 
 ### Form Handling
-- **Add/Edit Shipping Rates**: Utilize Formik for form management with Yup for validation.
+- **Add/Edit Shipping Rates**: Utilized Formik for form management with Yup for validation.
 
 ### Table Management
-- **Sorting**: Sort rates directly in the table without relying on external libraries.
-- **Reordering**: Implement drag-and-drop functionality for reordering table rows.
+- **Sorting**: Implemented Sorting rates directly in the table without using external libraries.
+- **Drag-n-Drop**: Implemented drag-and-drop functionality for reordering table rows without using external libraries
 
 ### State Management
-- **React Context API**: Efficiently manages application state, suitable for the lightweight nature of this project.
+- **React Context**: It was used to efficiently manage the application state, which is suitable for a lightweight project like this.
+- **useState hook**: Used useState hook for local state management.
 
 ### Design
-- **Tailwind CSS**: Provides utility-based styling for a responsive and customizable design.
+- **Tailwind CSS**: I used Tailwind CSS because it is a utility-based framework that gives the flexibility to modify everything and because I am very familiar with it. It Provides utility-based styling for a responsive and customizable design.
 
-### User Feedback
-- **react-toastify**: Displays toast notifications for user feedback after various operations.
+### Success/Failed Notification
+- **react-toastify**: Used this library to display toast notifications after various operations.
 
 ### Simulated API
-- **Loading States**: Simulate API interactions using `setTimeout` and a loader to mimic real API behavior.
+- **Loading States**: Tried to make changes look like API calls using `setTimeout` and a loader.
+
+## Testing
+- **Vitest**:  I used it as it is a suitable unit testing framework for Vite projects.
+- **@testing-library/react**: Provides utilities to test React components.
 
 ## Tech Stack
 
 - **Frontend**: React, TypeScript
 - **Styling**: Tailwind CSS
 - **Form Handling**: Formik, Yup (for validation)
-- **State Management**: React Context API
+- **State Management**: React Context
 - **Notifications**: react-toastify
 - **Custom Implementations**: Drag-and-drop and table sorting logic
