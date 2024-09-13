@@ -5,7 +5,7 @@ export const shippingRateSchema = Yup.object({
     price: Yup.number().required("Price is required").min(0, "Price can't be negative"),
     timeFrom: Yup.number()
         .required("Start date is required")
-        .min(0, "Can't be negative")
+        .min(0, "Start date can't be negative")
         .test(
             'is-less-than-or-equal',
             "Start date must be less than or equal to End date",
@@ -13,7 +13,7 @@ export const shippingRateSchema = Yup.object({
         ),
     timeTo: Yup.number()
         .required("End date is required")
-        .min(0, "Can't be negative")
+        .min(0, "End date can't be negative")
         .test(
             'is-greater-than-or-equal',
             "End date must be greater than or equal to Start date",
